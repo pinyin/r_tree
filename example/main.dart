@@ -1,17 +1,18 @@
 import 'dart:async';
 import 'dart:html';
+
 import 'package:r_tree/r_tree.dart';
 
 Future main() async {
   var rtree = RTree<String>();
   var app = querySelector('#app');
   var canvas = CanvasElement(width: 640, height: 480);
-  app.append(canvas);
+  app!.append(canvas);
   canvas.context2D
     ..fillStyle = '#ccc'
     ..fillRect(0, 0, 640, 480);
 
-  int startX, startY;
+  late int startX, startY;
   canvas.onMouseDown.listen((MouseEvent event) {
     var target = event.currentTarget as HtmlElement;
     var boundingRect = target.getBoundingClientRect();
@@ -32,7 +33,7 @@ Future main() async {
 
     if (currentBrush == 'search') {
       var resultList = querySelector('#results');
-      resultList.children = [];
+      resultList!.children = [];
       for (RTreeDatum match in rtree.search(rectangle)) {
         var color = '';
         switch (match.value) {
@@ -60,10 +61,10 @@ Future main() async {
     }
   });
 
-  querySelector('#red').onClick.listen((_) => currentBrush = '$red');
-  querySelector('#green').onClick.listen((_) => currentBrush = '$green');
-  querySelector('#blue').onClick.listen((_) => currentBrush = '$blue');
-  querySelector('#search').onClick.listen((_) => currentBrush = 'search');
+  querySelector('#red')!.onClick.listen((_) => currentBrush = '$red');
+  querySelector('#green')!.onClick.listen((_) => currentBrush = '$green');
+  querySelector('#blue')!.onClick.listen((_) => currentBrush = '$blue');
+  querySelector('#search')!.onClick.listen((_) => currentBrush = 'search');
 }
 
 const String alpha = '88';

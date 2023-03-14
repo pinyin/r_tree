@@ -23,12 +23,12 @@ abstract class Node<E> extends RTreeContributor {
   final int branchFactor;
 
   /// Parent node of this node, or null if this is the root node
-  Node<E> parent;
+  Node<E>? parent;
 
-  Rectangle _minimumBoundingRect;
+  Rectangle? _minimumBoundingRect;
 
   /// Returns the rectangle this Node covers
-  Rectangle get rect => _minimumBoundingRect;
+  Rectangle? get rect => _minimumBoundingRect;
 
   Node(this.branchFactor);
 
@@ -37,7 +37,7 @@ abstract class Node<E> extends RTreeContributor {
       Rectangle searchRect, bool Function(E item) shouldInclude);
 
   /// Inserts [item] into this node
-  Node<E> insert(RTreeDatum<E> item);
+  Node<E>? insert(RTreeDatum<E> item);
 
   /// Removes [item] from this node
   remove(RTreeDatum<E> item);
@@ -70,11 +70,11 @@ abstract class Node<E> extends RTreeContributor {
   /// of adding a new @item to this Node
   num expansionCost(RTreeContributor item) {
     if (_minimumBoundingRect == null) {
-      return _area(item.rect);
+      return _area(item.rect!);
     }
 
-    Rectangle newRect = _minimumBoundingRect.boundingBox(item.rect);
-    return _area(newRect) - _area(_minimumBoundingRect);
+    Rectangle newRect = _minimumBoundingRect!.boundingBox(item.rect!);
+    return _area(newRect) - _area(_minimumBoundingRect!);
   }
 
   num _area(Rectangle rect) =>
@@ -84,7 +84,7 @@ abstract class Node<E> extends RTreeContributor {
   include(RTreeContributor item) {
     _minimumBoundingRect = _minimumBoundingRect == null
         ? item.rect
-        : _minimumBoundingRect.boundingBox(item.rect);
+        : _minimumBoundingRect!.boundingBox(item.rect!);
   }
 
   /// Recalculated the bounding rectangle of this node
@@ -99,7 +99,7 @@ abstract class Node<E> extends RTreeContributor {
   }
 
   /// Determines if this node needs to be split and returns a new [Node] if so, otherwise returns null
-  Node<E> splitIfNecessary() => size > branchFactor ? _split() : null;
+  Node<E>? splitIfNecessary() => size > branchFactor ? _split() : null;
 
   Node<E> _split() {
     _Seeds seeds = _pickSeeds();
@@ -147,10 +147,10 @@ abstract class Node<E> extends RTreeContributor {
     RTreeContributor bottommost = children.elementAt(0);
 
     for (var child in children) {
-      if (child.rect.right < leftmost.rect.right) leftmost = child;
-      if (child.rect.left > rightmost.rect.left) rightmost = child;
-      if (child.rect.top > bottommost.rect.top) bottommost = child;
-      if (child.rect.bottom < topmost.rect.bottom) topmost = child;
+      if (child.rect!.right < leftmost.rect!.right) leftmost = child;
+      if (child.rect!.left > rightmost.rect!.left) rightmost = child;
+      if (child.rect!.top > bottommost.rect!.top) bottommost = child;
+      if (child.rect!.bottom < topmost.rect!.bottom) topmost = child;
     }
 
     RTreeContributor a, b, c, d;
@@ -183,11 +183,11 @@ abstract class Node<E> extends RTreeContributor {
 
   num _horizontalDifference(
           RTreeContributor leftmost, RTreeContributor rightmost) =>
-      (rightmost.rect.left - leftmost.rect.right).abs();
+      (rightmost.rect!.left - leftmost.rect!.right).abs();
 
   num _verticalDifference(
           RTreeContributor topmost, RTreeContributor bottommost) =>
-      (topmost.rect.bottom - bottommost.rect.top).abs();
+      (topmost.rect!.bottom - bottommost.rect!.top).abs();
 }
 
 class _Seeds {

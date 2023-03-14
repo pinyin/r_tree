@@ -34,7 +34,7 @@ class LeafNode<E> extends Node<E> {
         item.overlaps(searchRect) && shouldInclude(item.value));
   }
 
-  Node<E> insert(RTreeDatum<E> item) {
+  Node<E>? insert(RTreeDatum<E> item) {
     addChild(item);
     return splitIfNecessary();
   }

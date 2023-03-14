@@ -34,7 +34,7 @@ main() {
 
         expect(leafNode.size, equals(4));
 
-        LeafNode splitNode = leafNode.splitIfNecessary();
+        LeafNode splitNode = leafNode.splitIfNecessary() as LeafNode;
 
         Iterable<RTreeDatum> items =
             leafNode.search(Rectangle(0, 0, 1, 10), (_) => true);
@@ -62,7 +62,7 @@ main() {
 
         expect(leafNode.size, equals(4));
 
-        LeafNode splitNode = leafNode.splitIfNecessary();
+        LeafNode splitNode = leafNode.splitIfNecessary() as LeafNode;
 
         Iterable<RTreeDatum> items =
             leafNode.search(Rectangle(0, 0, 10, 1), (_) => true);
@@ -90,7 +90,7 @@ main() {
 
         expect(leafNode.size, equals(4));
 
-        LeafNode splitNode = leafNode.splitIfNecessary();
+        LeafNode splitNode = leafNode.splitIfNecessary() as LeafNode;
 
         Iterable<RTreeDatum> items =
             leafNode.search(Rectangle(0, 0, 10, 1), (_) => true);
